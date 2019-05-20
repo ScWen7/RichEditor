@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <CheckBox
+        android:id="@+id/cb_todo_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:padding="5dp"
+        android:visibility="gone" />
+
+
+    <EditText
+        android:id="@+id/et_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:cursorVisible="true"
+        android:textColor="#333333"
+        android:textCursorDrawable="@drawable/cursor_drawable"
+        android:textSize="16dp" />
+
+</LinearLayout>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <size android:width="325dp"
+                android:height="300dp"/>
+            <solid android:color="#e5e5e5"></solid>
+        </shape>
+    </item>
+    <item>
+        <bitmap
+            android:gravity="center"
+            android:src="@mipmap/ic_big_placeholder"></bitmap>
+    </item>
+</layer-list>

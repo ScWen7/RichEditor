@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item android:id="@+id/editor_voice_input"
+        android:title="@string/voice_input"
+        app:showAsAction="never"
+        android:icon="@drawable/ic_keyboard_voice_black_24dp"
+        />
+    <item android:id="@+id/editor_todo"
+        android:title="@string/todo"
+        app:showAsAction="never"
+        android:icon="@drawable/ic_check_box_black_24dp"
+        />
+    <item android:id="@+id/editor_export"
+        android:title="@string/export"
+        app:showAsAction="never"
+        android:icon="@drawable/ic_import_export_black_24dp"
+        />
+</menu>
