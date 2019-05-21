@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.scwen.note.NoteBean;
 import com.scwen.note.NoteEditorActivity;
@@ -77,6 +78,11 @@ public class HomeFragment extends Fragment {
         mRvHomeNote.setLayoutManager(new LinearLayoutManager(getActivity()));
         mListAdapter = new NoteListAdapter(null);
         mRvHomeNote.setAdapter(mListAdapter);
+
+        mListAdapter.setOnItemClickListener((adapter, view, position) -> {
+            NoteBean noteBean = mListAdapter.getData().get(position);
+            NoteEditorActivity.startIntent(getActivity(), noteBean.getId());
+        });
 
     }
 

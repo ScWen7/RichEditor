@@ -37,7 +37,7 @@ dependencies {
     implementation files('libs/bdasr_V3_20180801_d6f298a.jar')
     implementation 'com.jakewharton:butterknife:10.1.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
-    implementation project(':editor')
+    api project(':RichEditor')
     implementation 'org.litepal.android:core:2.0.0'
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.31'
     implementation 'androidx.multidex:multidex:2.0.0'

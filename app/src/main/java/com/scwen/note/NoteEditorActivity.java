@@ -7,8 +7,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.reactivex.Observable;
 import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -18,6 +22,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Pair;
@@ -48,6 +53,7 @@ import com.luck.picture.lib.tools.StringUtils;
 import com.scwen.editor.RichEditer;
 import com.scwen.editor.util.CaptureUtil;
 import com.scwen.editor.util.DensityUtil;
+import com.scwen.editor.util.EditConstants;
 import com.scwen.editor.weight.ImageActionListener;
 import com.scwen.editor.weight.ImageWeight;
 import com.scwen.note.util.NetWorkUtils;
@@ -61,6 +67,7 @@ import com.scwen.note.weight.VoiceRectView;
 
 import org.litepal.LitePal;
 import org.litepal.crud.LitePalSupport;
+import org.w3c.dom.Node;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -116,7 +123,7 @@ public class NoteEditorActivity extends AppCompatActivity {
     private ImageWeight currentActionWeight;
 
 
-    private int noteId;
+    private int noteId = -1;
     private Unbinder mUnbinder;
     private NoteBean mDetailBean;
 
@@ -153,10 +160,24 @@ public class NoteEditorActivity extends AppCompatActivity {
         initListener();
         createLableView(null);
         initRecog();
-
-        mDetailBean = LitePal.find(NoteBean.class, noteId);
+        if (-1 != noteId) {
+            mDetailBean = LitePal.find(NoteBean.class, noteId);
+            convertDetail();
+        }
 
     }
+
+    private void convertDetail() {
+        //正文
+        try {
+            String content_html = mDetailBean.getContent_html();
+            mEditor.parseHtml(content_html);
+        } catch (Exception e) {
+            e.printStackTrace();
+            hiddenLoadingDialog();
+        }
+    }
+
 
     private void getIntentData() {
         noteId = getIntent().getIntExtra(NOTE_ID, -1);
