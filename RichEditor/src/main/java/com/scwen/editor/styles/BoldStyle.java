@@ -1,5 +1,4 @@
-package com.sogu.kindlelaw.note.editor.styles;
-
+package com.scwen.editor.styles;
 
 import com.scwen.editor.span.BoldSpan;
 import com.scwen.editor.styles.NormalStyle;

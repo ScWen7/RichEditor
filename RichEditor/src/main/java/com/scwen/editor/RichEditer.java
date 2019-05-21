@@ -30,7 +30,11 @@ import com.scwen.editor.controller.OnEditActionListener;
 import com.scwen.editor.controller.QuoteController;
 import com.scwen.editor.controller.StyleController;
 import com.scwen.editor.model.TodoBean;
+import com.scwen.editor.parser.Html;
+import com.scwen.editor.parser.HtmlToSpannedConverter;
 import com.scwen.editor.span.MyBulletSpan;
+import com.scwen.editor.span.MyQuoteSpan;
+import com.scwen.editor.styles.BoldStyle;
 import com.scwen.editor.styles.DynamicStyle;
 import com.scwen.editor.styles.ItalicStyle;
 import com.scwen.editor.styles.StrikethroughStyle;
@@ -42,8 +46,13 @@ import com.scwen.editor.weight.BaseInputWeight;
 import com.scwen.editor.weight.ImageActionListener;
 import com.scwen.editor.weight.ImageWeight;
 import com.scwen.editor.weight.TodoWeight;
-import com.sogu.kindlelaw.note.editor.span.MyQuoteSpan;
-import com.sogu.kindlelaw.note.editor.styles.BoldStyle;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.nodes.FormElement;
+import org.jsoup.nodes.Node;
+import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -486,7 +495,7 @@ public class RichEditer extends LinearLayout {
 
         } else {
             //不存在其他 特殊样式
-            MyQuoteSpan quoteSpan = new MyQuoteSpan();
+            MyQuoteSpan quoteSpan = new MyQuoteSpan(getContext());
             editableText.setSpan(
                     quoteSpan, start, end, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
             ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.parseColor("#666666"));
@@ -583,7 +592,7 @@ public class RichEditer extends LinearLayout {
             return;
         }
         //不存在其他 特殊样式
-        MyQuoteSpan quoteSpan = new MyQuoteSpan();
+        MyQuoteSpan quoteSpan = new MyQuoteSpan(getContext());
         editable.setSpan(
                 quoteSpan, start, end, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.parseColor("#666666"));
@@ -1058,5 +1067,77 @@ public class RichEditer extends LinearLayout {
             }
         }
         return todos;
+    }
+
+
+    public void parseHtml(String html) {
+        startParseHtml(html);
+    }
+
+
+    /**
+     * 正文解析
+     * 1、dom 解析 获取到  body 子节点
+     * 2、根据子节点 判断类型
+     *
+     * @param content_html
+     */
+    private void startParseHtml(String content_html) {
+        if (TextUtils.isEmpty(content_html)) {
+            return;
+        }
+
+        HtmlToSpannedConverter.sContext = getContext().getApplicationContext();
+        Document document = Jsoup.parseBodyFragment(content_html);
+        Element element = document.body();
+        List<Node> nodes = element.childNodes();
+
+        convertNodeToWeight(nodes);
+
+    }
+
+    //--------------------------解析 控件 开始------------------------
+
+    private void convertNodeToWeight(List<Node> nodes) {
+
+
+        // 子节点 判断 子节点内容
+        // 需要 特殊处理的是  图片 <img>
+        // 待办事项  <form><input>
+        for (Node node : nodes) {
+            String outerHtml = node.outerHtml();
+            if (TextUtils.isEmpty(outerHtml) || EditConstants.STR_NEW_LINE.equalsIgnoreCase(outerHtml)) {
+                continue;
+            } else if ("<p></p>".equalsIgnoreCase(outerHtml)) {
+                continue;
+            } else if (node.nodeName().equalsIgnoreCase("img")) {
+                //当前是  div 区域
+                //获取图片
+                Element divEm = (Element) node;
+                Elements imgs = divEm.getElementsByTag("img");
+                if (imgs != null && imgs.size() > 0) {
+                    Element imageEm = imgs.get(0);
+                    String src = imageEm.attr("src");
+                    if (!TextUtils.isEmpty(src)) {
+                        ImageWeight imageWeight = insertImage(src);
+                        imageWeight.setShortPath(src);
+                    }
+                }
+
+            }else if (node instanceof FormElement) {
+                FormElement form = (FormElement) node;
+                Elements inputs = form.getElementsByTag("input");
+                Element input = inputs.get(0);
+                boolean checked = input.hasAttr("checked");
+                String value = input.nextSibling().outerHtml();
+                addTodoWeight(value, true, checked);
+            } else {
+                Spanned span = Html.fromHtml(node.toString(), Html.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH);
+                if (!TextUtils.isEmpty(span)) {
+                    addTodoWeight(span, false, false);
+                }
+            }
+
+        }
     }
 }

@@ -1,5 +1,6 @@
-package com.sogu.kindlelaw.note.editor.span;
+package com.scwen.editor.span;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -27,12 +28,16 @@ public class MyQuoteSpan extends QuoteSpan {
 
     private Bitmap bitmap;
 
-    public MyQuoteSpan() {
+
+    private Context mContext;
+
+    public MyQuoteSpan(Context context) {
+        this.mContext = context;
         initBitmap();
     }
 
     private void initBitmap() {
-        Bitmap resource = BitmapFactory.decodeResource(Resources.getSystem(), R.mipmap.ic_quote_span);
+        Bitmap resource = BitmapFactory.decodeResource( mContext.getResources(), R.mipmap.ic_quote_span);
         bitmap = BitmapUtil.zoomBitmap(resource, DensityUtil.dp2px(16), DensityUtil.dp2px(12));
     }
 

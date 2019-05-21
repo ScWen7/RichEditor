@@ -3,8 +3,8 @@ package com.scwen.editor.controller;
 import android.text.Editable;
 import android.widget.EditText;
 
+import com.scwen.editor.span.MyQuoteSpan;
 import com.scwen.editor.util.EditConstants;
-import com.sogu.kindlelaw.note.editor.span.MyQuoteSpan;
 
 
 /**

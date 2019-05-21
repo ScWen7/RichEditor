@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 28
@@ -8,8 +9,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.0.1"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -34,4 +35,14 @@ dependencies {
     implementation files('libs/tagsoup-1.2.1.jar')
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+}
+// 配置2
+publish {
+    userOrg = 'scwen7'             // Binary用户名
+    repoName = 'RichEditor'          // Binary上的刚才新建的仓库名（Repository）
+    groupId = 'com.github.scwen7'        // 依赖名compile 'x:y:z'中的包名x
+    artifactId = 'RichEditor'        // 依赖名compile 'x:y:z'中的项目名y
+    publishVersion = '1.0.1'          // 依赖名compile 'x:y:z'中的版本号z
+    desc = 'a RichEditor'            // 对该开源组件的说明
+    website = 'https://github.com/ScWen7/RichEditor'  // VCS地址，即填写项目上传的Github地址
 }

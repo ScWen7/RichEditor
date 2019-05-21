@@ -113,7 +113,7 @@ public class ImageWeight extends BaseInputWeight implements View.OnClickListener
     }
 
     public String provideHtml(String path) {
-        return String.format("<div class=\"image\"><img src=\"%s\"></img></div>", path);
+        return String.format("<img src=\"%s\"></img>", path);
     }
 
     @Override

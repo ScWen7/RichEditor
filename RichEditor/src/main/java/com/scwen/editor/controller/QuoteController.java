@@ -9,8 +9,8 @@ import android.util.Pair;
 import android.widget.EditText;
 
 import com.scwen.editor.span.MyBulletSpan;
+import com.scwen.editor.span.MyQuoteSpan;
 import com.scwen.editor.util.EditConstants;
-import com.sogu.kindlelaw.note.editor.span.MyQuoteSpan;
 
 
 /**
