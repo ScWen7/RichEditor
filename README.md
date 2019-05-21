@@ -6,13 +6,13 @@ Until now,it support these styles:
 - Bold
 - Italic
 - Underline
-- Strikethrough 
-- Quote 
-- Bullet 
+- Strikethrough
+- Quote
+- Bullet
 - FontSize
 - Align Left
 - Align Center
-- Align Right 
+- Align Right
 - Todos
 - Insert Image
 
