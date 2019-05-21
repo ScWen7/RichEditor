@@ -4,7 +4,7 @@ RichEditor is a rich text editor work on Android.
 
 ###Screenshots:
 
-
+![](https://github.com/ScWen7/RichEditor/screenshots/screenshots1.jpg)
 
 Until now,it support these styles:
 
@@ -34,3 +34,4 @@ implementation 'com.github.scwen7:RichEditor:1.0.1'
 Or you can ```git clone https://github.com/ScWen7/RichEditor.git```  and import **RichEditor** as a module.
 
 Other way,you may have different business scenarios, I'd like recommend to import `RichEditor` into your project direclty and add it as a local module dependency. 
+
