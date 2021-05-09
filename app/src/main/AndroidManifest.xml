@@ -40,6 +40,21 @@
             android:windowSoftInputMode="adjustResize|stateHidden">
 
         </activity>
+
+
+        <meta-data
+            android:name="com.baidu.speech.APP_ID"
+            android:value="15973824" />
+        <meta-data
+            android:name="com.baidu.speech.API_KEY"
+            android:value="m2rp3U2cncTMkgLGwEKSVe68" />
+        <meta-data
+            android:name="com.baidu.speech.SECRET_KEY"
+            android:value="IstDTVOyxi7mjXgQQS2yPanc6OMmg4mA" />
+
+        <service
+            android:name="com.baidu.speech.VoiceRecognitionService"
+            android:exported="false" />
     </application>
 
 </manifest>
